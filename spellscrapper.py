@@ -10,7 +10,7 @@ def scrape_bard_spells(url):
     spell_levels = soup.find('div', class_='yui-content').find_all('div')
     
     data = []
-    headers = ['Spell Name', 'School', 'Casting Time', 'Range', 'Duration', 'Components', 'Effect']
+    headers = ['Spell Name', 'School', 'Casting Time', 'Range', 'Duration', 'Components']
 
     for level in spell_levels:
         table = level.find('table')
@@ -26,7 +26,6 @@ def scrape_bard_spells(url):
             cols = [col.text.strip() for col in cols]
             if len(cols) < 7:
                 cols.append('')
-            
             data.append(cols)           
 
     # Create a DataFrame from the data
