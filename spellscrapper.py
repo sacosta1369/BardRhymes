@@ -24,7 +24,7 @@ def scrape_bard_spells(url):
         for row in rows[1:]:
             cols = row.find_all('td')
             cols = [col.text.strip() for col in cols]
-            if len(cols) < 7:
+            if len(cols) < 6:
                 cols.append('')
             data.append(cols)           
 
