@@ -7,12 +7,12 @@ def scrape_bard_spells(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     
-    spell_levels = soup.find('div', class_='yui-content').find_all('div')
+    spell_levels = soup.find('div', class_='yui-content').find_all('div', recursive=False)
     
     data = []
-    headers = ['Spell Name', 'School', 'Casting Time', 'Range', 'Duration', 'Components']
+    headers = ['Spell Name', 'School', 'Casting Time', 'Range', 'Duration', 'Components', 'Level']
 
-    for level in spell_levels:
+    for level_index, level in enumerate(spell_levels):
         table = level.find('table')
         if not table:
             continue
@@ -24,7 +24,8 @@ def scrape_bard_spells(url):
         for row in rows[1:]:
             cols = row.find_all('td')
             cols = [col.text.strip() for col in cols]
-            if len(cols) < 6:
+            cols.append(level_index)
+            if len(cols) < 7:
                 cols.append('')
             data.append(cols)           
 
